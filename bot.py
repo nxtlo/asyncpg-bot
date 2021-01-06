@@ -28,8 +28,6 @@ class MainBot(commands.Bot):
     def clean_prefix(self):
         return "!"
 
-    # Here we make the database pool so we can access it from any cog/file
-    # example: await self.bot.pool.execute(...)
     async def on_ready(self):
         with open('./data/schema.sql', 'r', encoding='utf8') as script:
             schema = script.read()
@@ -37,6 +35,10 @@ class MainBot(commands.Bot):
             print("Tables created...") # idk if i should have this in on_ready or else, if there's a better way tell me :)
         print("Connected to discord...")
 
+
+    # Here we make the database pool so we can access it from any cog/file
+    # example: await self.bot.pool.execute(...)
+    
     async def pool_init(self) -> Optional[asyncpg.pool.Pool]:
         self.pool = await asyncpg.create_pool(
             database=self.db.db,
