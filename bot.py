@@ -52,7 +52,7 @@ class MainBot(commands.Bot):
     # a custom per guild prefix
     async def get_prefix(self, msg):
         if not msg.guild:
-            return '!' # if the message not in a guild and in the DMs then we return this prefix
+            return self.clean_prefix # if the message not in a guild and in the DMs then we return this prefix
         else:
             query = '''SELECT prefix FROM prefixes WHERE guild_id = $1''' # Select the prefix from prefixes table.
             prefix = await self.pool.fetchval(query, str(msg.guild.id)) # fetch the table and return the first matching prefix and the guild.id
